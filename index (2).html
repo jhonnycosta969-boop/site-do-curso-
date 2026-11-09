@@ -1,110 +1,431 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Caça aos Bugs — Cadastro de Alunos</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body{background:#f3f6fb}.hero{background:linear-gradient(120deg,#152a52,#2876b8);color:white}
-    .card{border:0;box-shadow:0 5px 18px #1b315014}.small-note{font-size:.88rem}
-    .table td{vertical-align:middle}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JBMM - Carregadores modernos, seguros e eficientes para o seu dia a dia.">
+    <title>JBMM | Energia para conectar</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #17233c;
+        }
+
+        header {
+            background: #071b3a;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #42a5ff;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #42a5ff;
+        }
+
+        .hero {
+            min-height: 540px;
+            padding: 70px 8%;
+            background: linear-gradient(120deg, #071b3a, #1256a0);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-content {
+            max-width: 550px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 5vw, 58px);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #42a5ff;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #dceaff;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #1685ed;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #0866c1;
+            transform: translateY(-3px);
+        }
+
+        .charger {
+            width: 230px;
+            height: 300px;
+            background: linear-gradient(145deg, #ffffff, #c9d5e5);
+            border-radius: 35px;
+            margin: auto;
+            box-shadow: 0 20px 50px #0006;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: #071b3a;
+        }
+
+        .charger::before {
+            content: "";
+            position: absolute;
+            top: -17px;
+            left: 65px;
+            width: 25px;
+            height: 25px;
+            background: silver;
+            border-radius: 5px 5px 0 0;
+            box-shadow: 75px 0 silver;
+        }
+
+        .charger strong {
+            font-size: 35px;
+            letter-spacing: 4px;
+        }
+
+        .charger span {
+            margin-top: 10px;
+            color: #1685ed;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        section {
+            padding: 75px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 15px;
+            color: #071b3a;
+        }
+
+        .section-description {
+            text-align: center;
+            color: #64748b;
+            margin: 0 auto 45px;
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px #102b5010;
+            transition: 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-7px);
+        }
+
+        .benefit-card .emoji {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card h3 {
+            margin-bottom: 12px;
+            color: #1256a0;
+        }
+
+        .benefit-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .product {
+            background: #e9f2fc;
+        }
+
+        .product-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 70px;
+            flex-wrap: wrap;
+        }
+
+        .product-info {
+            max-width: 480px;
+        }
+
+        .product-info h2 {
+            font-size: 35px;
+            margin-bottom: 20px;
+            color: #071b3a;
+        }
+
+        .product-info p {
+            line-height: 1.8;
+            color: #52647d;
+            margin-bottom: 25px;
+        }
+
+        .product-image {
+            background: #071b3a;
+            padding: 45px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px #071b3a30;
+        }
+
+        .about {
+            text-align: center;
+        }
+
+        .about p {
+            max-width: 750px;
+            margin: auto;
+            line-height: 1.9;
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        .contact {
+            background: #071b3a;
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .contact p {
+            color: #dceaff;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #041126;
+            padding: 25px;
+            color: #aabbd1;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                justify-content: center;
+            }
+
+            nav {
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .hero {
+                text-align: center;
+            }
+
+            .hero-content {
+                margin: auto;
+            }
+
+            section {
+                padding: 55px 6%;
+            }
+
+            .product-info {
+                text-align: center;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<nav class="navbar navbar-dark bg-dark"><div class="container"><span class="navbar-brand mb-0">🐞 Caça aos Bugs</span><span class="text-white-50">Missão nível 2</span></div></nav>
-<header class="hero py-4"><div class="container"><span class="badge text-bg-warning mb-2">DESAFIO PARA AS EQUIPES</span><h1 class="h2">Sistema de Cadastro de Alunos</h1><p class="mb-0">O sistema foi atualizado. Agora há 10 falhas escondidas — nem todas aparecem no primeiro teste.</p></div></header>
-<main class="container py-4">
-  <div class="alert alert-info"><strong>Missão:</strong> teste com dados válidos, inválidos, repetidos e inesperados. Não altere o código nesta rodada. Registre <em>ação, resultado encontrado, resultado esperado e gravidade</em>.</div>
-  <div class="row g-4">
-    <section class="col-lg-5">
-      <div class="card p-4">
-        <h2 class="h5 mb-3">Cadastrar aluno</h2>
-        <form id="studentForm">
-          <div class="mb-3"><label for="nome" class="form-label">Nome completo</label><input id="nome" class="form-control" placeholder="Ex.: Ana Souza"></div>
-          <div class="mb-3"><label for="email" class="form-label">E-mail</label><input id="email" type="text" class="form-control" placeholder="ana@escola.com"></div>
-          <div class="mb-3"><label for="idade" class="form-label">Idade</label><input id="idade" type="number" class="form-control" placeholder="Ex.: 16"></div>
-          <div class="mb-3"><label for="turma" class="form-label">Turma</label><select id="turma" class="form-select"><option value="">Selecione...</option><option>1º ADS</option><option>2º ADS</option><option>3º ADS</option></select></div>
-          <div class="d-grid gap-2"><button class="btn btn-primary" type="submit">Cadastrar aluno</button><button class="btn btn-outline-secondary" type="button" id="limpar">Limpar formulário</button></div>
-          <div id="mensagem" class="mt-3" aria-live="polite"></div>
-        </form>
-      </div>
-    </section>
-    <section class="col-lg-7">
-      <div class="card p-4">
-        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3"><h2 class="h5 mb-0">Alunos cadastrados</h2><span class="badge text-bg-primary">Total: <span id="total">3</span></span></div>
-        <label for="busca" class="form-label">Buscar aluno por nome ou e-mail</label>
-        <input id="busca" class="form-control mb-3" placeholder="Digite parte do nome ou e-mail...">
-        <div class="table-responsive"><table class="table table-hover align-middle">
-          <thead class="table-light"><tr><th>Nome</th><th>E-mail</th><th>Idade</th><th>Turma</th><th>Ação</th></tr></thead>
-          <tbody id="lista">
-            <tr><td class="student-name">Lucas Lima</td><td>lucas@escola.com</td><td>16</td><td>2º ADS</td><td><button class="btn btn-sm btn-danger excluir">Excluir</button></td></tr>
-            <tr><td class="student-name">Marina Alves</td><td>marina@escola.com</td><td>17</td><td>3º ADS</td><td><button class="btn btn-sm btn-danger excluir">Excluir</button></td></tr>
-            <tr><td class="student-name">Ana Souza</td><td>ana@escola.com</td><td>16</td><td>2º ADS</td><td><button class="btn btn-sm btn-danger excluir">Excluir</button></td></tr>
-          </tbody>
-        </table></div>
-        <p class="text-secondary small-note mb-0">Dica: teste busca com letras maiúsculas/minúsculas, nomes parciais e e-mails.</p>
-      </div>
-      <div class="card p-4 mt-4"><h2 class="h6">Relatório da equipe</h2><ol class="small-note mb-0"><li>Qual ação você executou?</li><li>O que aconteceu?</li><li>O que deveria acontecer?</li><li>Qual característica da qualidade foi afetada?</li><li>Qual a gravidade: baixa, média ou alta?</li></ol></div>
-    </section>
-  </div>
-  <footer class="text-center text-secondary small py-4">Atividade didática • HTML + CSS + Bootstrap + JavaScript</footer>
-</main>
-<script>
-  const form = document.getElementById('studentForm');
-  const lista = document.getElementById('lista');
-  const mensagem = document.getElementById('mensagem');
-  const total = document.getElementById('total');
 
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const nome = document.getElementById('nome').value;
-    const email = document.getElementById('email').value;
-    const idade = document.getElementById('idade').value;
-    const turma = document.getElementById('turma').value;
+    <header>
+        <div class="logo">JBMM</div>
 
-    // BUG 1: não bloqueia campos vazios.
-    // BUG 2: valida e-mail apenas pela presença de @ e permite e-mail vazio.
-    if (email.includes('@') || email === '') {
-      // BUG 3: não impede e-mail duplicado.
-      // BUG 4: aceita nome composto só por espaços.
-      // BUG 5: não valida idade mínima/máxima nem valores negativos.
-      // BUG 6: concatena dados do usuário em innerHTML.
-      const linha = document.createElement('tr');
-      linha.innerHTML = `<td class="student-name">${nome}</td><td>${email}</td><td>${idade}</td><td>${turma}</td><td><button class="btn btn-sm btn-danger excluir">Excluir</button></td>`;
-      lista.appendChild(linha);
-      // BUG 7: contador não é atualizado após cadastrar.
-      mensagem.innerHTML = '<div class="alert alert-success mb-0">Aluno cadastrado com sucesso!</div>';
-      form.reset();
-      filtrarAlunos();
-    } else {
-      mensagem.innerHTML = '<div class="alert alert-danger mb-0">E-mail inválido.</div>';
-    }
-  });
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#beneficios">Benefícios</a>
+            <a href="#produto">Produto</a>
+            <a href="#sobre">Sobre nós</a>
+            <a href="#contato">Contato</a>
+        </nav>
+    </header>
 
-  // BUG 8: limpar formulário não limpa a mensagem.
-  document.getElementById('limpar').addEventListener('click', function() {
-    form.reset();
-  });
+    <main>
+        <section class="hero" id="inicio">
+            <div class="hero-content">
+                <h1>Energia para <span>conectar</span> seu mundo.</h1>
 
-  lista.addEventListener('click', function(event) {
-    if (event.target.classList.contains('excluir')) {
-      event.target.closest('tr').remove();
-      // BUG 9: contador não é atualizado após excluir.
-    }
-  });
+                <p>
+                    Conheça a JBMM, uma marca que busca oferecer
+                    carregadores modernos, práticos e confiáveis
+                    para acompanhar você em todos os momentos.
+                </p>
 
-  function filtrarAlunos() {
-    const termo = document.getElementById('busca').value;
-    const linhas = lista.querySelectorAll('tr');
-    linhas.forEach(function(linha) {
-      const nome = linha.cells[0].textContent;
-      const email = linha.cells[1].textContent;
-      // BUG 10: busca exige correspondência exata e diferencia maiúsculas/minúsculas.
-      linha.style.display = (nome === termo || email === termo || termo === '') ? '' : 'none';
-    });
-  }
-  document.getElementById('busca').addEventListener('input', filtrarAlunos);
-</script>
+                <a href="#produto" class="btn">Conheça nosso produto</a>
+            </div>
+
+            <div class="charger">
+                <strong>JBMM</strong>
+                <span>POWER YOUR DAY</span>
+            </div>
+        </section>
+
+        <section id="beneficios">
+            <h2 class="section-title">Por que escolher a JBMM?</h2>
+
+            <p class="section-description">
+                Tecnologia e praticidade para deixar seu dia a dia
+                mais conectado.
+            </p>
+
+            <div class="benefits">
+
+                <div class="benefit-card">
+                    <div class="emoji">⚡</div>
+                    <h3>Eficiência</h3>
+                    <p>Uma solução prática para manter seus dispositivos carregados.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="emoji">🛡️</div>
+                    <h3>Segurança</h3>
+                    <p>Valorizamos a qualidade e a segurança no carregamento.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="emoji">📱</div>
+                    <h3>Praticidade</h3>
+                    <p>Um produto pensado para acompanhar sua rotina.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="emoji">💙</div>
+                    <h3>Confiança</h3>
+                    <p>Nosso objetivo é oferecer uma experiência positiva aos clientes.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="product" id="produto">
+            <div class="product-content">
+
+                <div class="product-image">
+                    <div class="charger">
+                        <strong>JBMM</strong>
+                        <span>POWER YOUR DAY</span>
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <h2>Conheça o carregador JBMM</h2>
+
+                    <p>
+                        Nosso carregador foi pensado para quem procura
+                        praticidade e tecnologia em um único produto.
+                        A JBMM acredita que estar conectado deve ser
+                        simples e fazer parte de qualquer rotina.
+                    </p>
+
+                    <a href="#contato" class="btn">Tenho interesse</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="about" id="sobre">
+            <h2 class="section-title">Sobre a JBMM</h2>
+
+            <p>
+                A JBMM nasceu com a proposta de trazer mais praticidade
+                para o cotidiano das pessoas por meio de soluções de
+                carregamento. Nossa ideia é unir tecnologia, qualidade
+                e um design moderno, buscando sempre atender às
+                necessidades dos nossos clientes.
+            </p>
+        </section>
+
+        <section class="contact" id="contato">
+            <h2>Fique conectado com a JBMM!</h2>
+
+            <p>
+                Gostou do nosso produto? Entre em contato e saiba mais
+                sobre o carregador JBMM.
+            </p>
+
+            <a href="mailto:contato@jbmm.com"
+               class="btn">
+                Entre em contato
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 JBMM - Todos os direitos reservados.</p>
+        <p>Energia para conectar seu mundo.</p>
+    </footer>
+
 </body>
 </html>
