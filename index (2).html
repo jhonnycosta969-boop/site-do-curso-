@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caça aos Bugs — Cadastro de Alunos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body{background:#f3f6fb}.hero{background:linear-gradient(120deg,#152a52,#2876b8);color:white}
+    .card{border:0;box-shadow:0 5px 18px #1b315014}.small-note{font-size:.88rem}
+    .table td{vertical-align:middle}
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark"><div class="container"><span class="navbar-brand mb-0">🐞 Caça aos Bugs</span><span class="text-white-50">Missão nível 2</span></div></nav>
+<header class="hero py-4"><div class="container"><span class="badge text-bg-warning mb-2">DESAFIO PARA AS EQUIPES</span><h1 class="h2">Sistema de Cadastro de Alunos</h1><p class="mb-0">O sistema foi atualizado. Agora há 10 falhas escondidas — nem todas aparecem no primeiro teste.</p></div></header>
+<main class="container py-4">
+  <div class="alert alert-info"><strong>Missão:</strong> teste com dados válidos, inválidos, repetidos e inesperados. Não altere o código nesta rodada. Registre <em>ação, resultado encontrado, resultado esperado e gravidade</em>.</div>
+  <div class="row g-4">
+    <section class="col-lg-5">
+      <div class="card p-4">
+        <h2 class="h5 mb-3">Cadastrar aluno</h2>
+        <form id="studentForm">
+          <div class="mb-3"><label for="nome" class="form-label">Nome completo</label><input id="nome" class="form-control" placeholder="Ex.: Ana Souza"></div>
+          <div class="mb-3"><label for="email" class="form-label">E-mail</label><input id="email" type="text" class="form-control" placeholder="ana@escola.com"></div>
+          <div class="mb-3"><label for="idade" class="form-label">Idade</label><input id="idade" type="number" class="form-control" placeholder="Ex.: 16"></div>
+          <div class="mb-3"><label for="turma" class="form-label">Turma</label><select id="turma" class="form-select"><option value="">Selecione...</option><option>1º ADS</option><option>2º ADS</option><option>3º ADS</option></select></div>
+          <div class="d-grid gap-2"><button class="btn btn-primary" type="submit">Cadastrar aluno</button><button class="btn btn-outline-secondary" type="button" id="limpar">Limpar formulário</button></div>
+          <div id="mensagem" class="mt-3" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+    <section class="col-lg-7">
+      <div class="card p-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3"><h2 class="h5 mb-0">Alunos cadastrados</h2><span class="badge text-bg-primary">Total: <span id="total">3</span></span></div>
+        <label for="busca" class="form-label">Buscar aluno por nome ou e-mail</label>
+        <input id="busca" class="form-control mb-3" placeholder="Digite parte do nome ou e-mail...">
+        <div class="table-responsive"><table class="table table-hover align-middle">
+          <thead class="table-light"><tr><th>Nome</th><th>E-mail</th><th>Idade</th><th>Turma</th><th>Ação</th></tr></thead>
+          <tbody id="lista">
+            <tr><td class="student-name">Lucas Lima</td><td>lucas@escola.com</td><td>16</td><td>2º ADS</td><td><button class="btn btn-sm btn-danger excluir">Excluir</button></td></tr>
+            <tr><td class="student-name">Marina Alves</td><td>marina@escola.com</td><td>17</td><td>3º ADS</td><td><button class="btn btn-sm btn-danger excluir">Excluir</button></td></tr>
+            <tr><td class="student-name">Ana Souza</td><td>ana@escola.com</td><td>16</td><td>2º ADS</td><td><button class="btn btn-sm btn-danger excluir">Excluir</button></td></tr>
+          </tbody>
+        </table></div>
+        <p class="text-secondary small-note mb-0">Dica: teste busca com letras maiúsculas/minúsculas, nomes parciais e e-mails.</p>
+      </div>
+      <div class="card p-4 mt-4"><h2 class="h6">Relatório da equipe</h2><ol class="small-note mb-0"><li>Qual ação você executou?</li><li>O que aconteceu?</li><li>O que deveria acontecer?</li><li>Qual característica da qualidade foi afetada?</li><li>Qual a gravidade: baixa, média ou alta?</li></ol></div>
+    </section>
+  </div>
+  <footer class="text-center text-secondary small py-4">Atividade didática • HTML + CSS + Bootstrap + JavaScript</footer>
+</main>
+<script>
+  const form = document.getElementById('studentForm');
+  const lista = document.getElementById('lista');
+  const mensagem = document.getElementById('mensagem');
+  const total = document.getElementById('total');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const nome = document.getElementById('nome').value;
+    const email = document.getElementById('email').value;
+    const idade = document.getElementById('idade').value;
+    const turma = document.getElementById('turma').value;
+
+    // BUG 1: não bloqueia campos vazios.
+    // BUG 2: valida e-mail apenas pela presença de @ e permite e-mail vazio.
+    if (email.includes('@') || email === '') {
+      // BUG 3: não impede e-mail duplicado.
+      // BUG 4: aceita nome composto só por espaços.
+      // BUG 5: não valida idade mínima/máxima nem valores negativos.
+      // BUG 6: concatena dados do usuário em innerHTML.
+      const linha = document.createElement('tr');
+      linha.innerHTML = `<td class="student-name">${nome}</td><td>${email}</td><td>${idade}</td><td>${turma}</td><td><button class="btn btn-sm btn-danger excluir">Excluir</button></td>`;
+      lista.appendChild(linha);
+      // BUG 7: contador não é atualizado após cadastrar.
+      mensagem.innerHTML = '<div class="alert alert-success mb-0">Aluno cadastrado com sucesso!</div>';
+      form.reset();
+      filtrarAlunos();
+    } else {
+      mensagem.innerHTML = '<div class="alert alert-danger mb-0">E-mail inválido.</div>';
+    }
+  });
+
+  // BUG 8: limpar formulário não limpa a mensagem.
+  document.getElementById('limpar').addEventListener('click', function() {
+    form.reset();
+  });
+
+  lista.addEventListener('click', function(event) {
+    if (event.target.classList.contains('excluir')) {
+      event.target.closest('tr').remove();
+      // BUG 9: contador não é atualizado após excluir.
+    }
+  });
+
+  function filtrarAlunos() {
+    const termo = document.getElementById('busca').value;
+    const linhas = lista.querySelectorAll('tr');
+    linhas.forEach(function(linha) {
+      const nome = linha.cells[0].textContent;
+      const email = linha.cells[1].textContent;
+      // BUG 10: busca exige correspondência exata e diferencia maiúsculas/minúsculas.
+      linha.style.display = (nome === termo || email === termo || termo === '') ? '' : 'none';
+    });
+  }
+  document.getElementById('busca').addEventListener('input', filtrarAlunos);
+</script>
+</body>
+</html>
